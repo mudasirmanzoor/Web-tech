@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Design</title>
+    <style>
+        body {
+            background-color: gray;
+            font-family: Arial, sans-serif;
+            /* Change font here */
+        }
+
+        .card {
+            background-color: white;
+            width: 194px;
+            height: 344px;
+            border-radius: 7px;
+            padding: 3px;
+            overflow: hidden;
+        }
+
+        .image img {
+            width: 100%;
+            height: auto;
+            border-radius: 7px;
+        }
+
+        .capsules {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .capsules span {
+            border: 2px solid hotpink;
+            padding: 4px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .content {
+            padding: 10px;
+        }
+
+        .content h1 {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .content p {
+            font-size: 12px;
+            overflow-wrap: break-word;
+        }
+
+        .button {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .button button {
+            padding: 4px 10px;
+            border-radius: 5px;
+            background-color: hotpink;
+            border: none;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="image">
+            <img src="WhatsApp Image autumn.jpg" alt="beauty image">
+        </div>
+        <div class="capsules">
+            <span>Nature</span>
+            <span>Autumn</span>
+        </div>
+        <div class="content">
+            <h1>MUDASIR</h1>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis obcaecati quam est expedita.</p>
+            <div class="button">
+                <button>Read more</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

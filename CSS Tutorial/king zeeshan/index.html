@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Queries for iPhones</title>
+    <style>
+        body {
+            background-color: red; /* Default for larger screens */
+        }
+
+        /* iPhone SE and similar (max width: 320px) */
+        @media only screen and (max-width: 320px) {
+            body {
+                background-color: green;
+            }
+        }
+
+        /* iPhone 6/7/8 and similar (width: 375px) */
+        @media only screen and (max-width: 375px) and (min-width: 321px) {
+            body {
+                background-color: blue;
+            }
+        }
+
+        /* iPhone Plus models, iPhone X, 11 Pro, etc. (width: 414px) */
+        @media only screen and (max-width: 414px) and (min-width: 376px) {
+            body {
+                background-color: purple;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div>Hey! I change color depending on your iPhone screen size.</div>
+</body>
+
+</html>

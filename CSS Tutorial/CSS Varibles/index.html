@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Varibles</title>
+    <style>
+        :root {
+            --color:hotpink;
+            --seccolor:blue;
+        }
+ 
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            background-color:var(--color);
+        }
+        .container{
+            background-color: var(--seccolor);
+        }
+        
+        ul li:first-child{       /* with this first home color change and other reamained unchanged */
+            --color:rgb(255,0,247);
+            background-color: var(--seccolor);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li>HOME</li>
+            <li>HOME</li>
+            <li>Contact</li>
+        </ul>
+    </div>
+
+    <div class=" container">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, ullam labore aliquam nemo expedita culpa atque
+        velit vitae nostrum maxime explicabo suscipit ipsum quaerat amet eveniet! Sequi alias debitis aperiam,
+        cupiditate expedita sed id itaque. Nobis error, sapiente cumque architecto similique fugiat aliquid perferendis
+        nulla!
+    </div>
+</body>
+
+</html>
