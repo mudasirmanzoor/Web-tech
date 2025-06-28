@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusMarket - University Marketplace</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --background-color: #ffffff;
+            --surface-color: #f8fafc;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background: var(--background-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .theme-toggle {
+            display: none;
+        }
+
+        .theme-toggle-label {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .theme-toggle-label:hover {
+            background: var(--border-color);
+        }
+
+        .moon-icon,
+        .sun-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: var(--transition);
+        }
+
+        .sun-icon {
+            display: none;
+        }
+
+        .theme-toggle:checked + .theme-toggle-label .moon-icon {
+            display: none;
+        }
+
+        .theme-toggle:checked + .theme-toggle-label .sun-icon {
+            display: block;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--surface-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-search .search-bar {
+            padding: 1rem 1rem 1rem 3rem;
+            font-size: 1.1rem;
+            border: none;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Categories Grid */
+        .categories {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 2rem 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Featured Listings */
+        .featured {
+            background: var(--surface-color);
+            padding: 4rem 1rem;
+        }
+
+        .featured-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .listing-card {
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .listing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .listing-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 3rem;
+        }
+
+        .listing-content {
+            padding: 1.5rem;
+        }
+
+        .listing-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .listing-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .listing-condition {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .seller-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .seller-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .seller-details {
+            flex: 1;
+        }
+
+        .seller-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .seller-year {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            z-index: 50;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            background: #059669;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                order: 3;
+                max-width: none;
+            }
+
+            .nav-actions {
+                order: 2;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fab {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .listing-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .category-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Trust Badges */
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .verified-badge {
+            background: var(--primary-color);
+        }
+
+        /* Filters Bar */
+        .filters-bar {
+            background: var(--background-color);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .filter-chip {
+            padding: 0.5rem 1rem;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="icon icon-graduation-cap"></span>
+                CampusMarket
+            </a>
+            
+            <div class="search-container">
+                <span class="icon icon-search search-icon"></span>
+                <input type="text" class="search-bar" placeholder="Search for books, electronics, and more...">
+            </div>
+            
+            <div class="nav-actions">
+                <div class="theme-toggle-container">
+                    <input type="checkbox" id="theme-toggle" class="theme-toggle">
+                    <label for="theme-toggle" class="theme-toggle-label">
+                        <span class="icon icon-moon moon-icon"></span>
+                        <span class="icon icon-sun sun-icon"></span>
+                    </label>
+                </div>
+                <a href="login.html" class="btn btn-outline">
+                    <span class="icon icon-user"></span>
+                    Login
+                </a>
+                <a href="sell-item.html" class="btn btn-primary">
+                    <span class="icon icon-plus"></span>
+                    Sell Item
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+        <a href="#" class="filter-chip active">All Items</a>
+        <a href="category.html?cat=books" class="filter-chip">Books</a>
+        <a href="category.html?cat=electronics" class="filter-chip">Electronics</a>
+        <a href="category.html?cat=fashion" class="filter-chip">Fashion</a>
+        <a href="category.html?cat=hostel" class="filter-chip">Hostel Essentials</a>
+        <a href="#" class="filter-chip">Under ₹500</a>
+        <a href="#" class="filter-chip">Recently Added</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Campus Marketplace</h1>
+            <p>Buy and sell with fellow students. Find great deals on textbooks, electronics, and everything you need for campus life.</p>
+            
+            <div class="hero-search">
+                <span class="icon icon-search search-icon"></span>
+                <input type="text" class="search-bar" placeholder="What are you looking for today?">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="categories-grid">
+            <a href="category.html?cat=books" class="category-card">
+                <div class="category-icon">
+                    <span class="icon icon-book"></span>
+                </div>
+                <div class="category-name">Textbooks</div>
+            </a>
+            
+            <a href="category.html?cat=electronics" class="category-card">
+                <div class="category-icon">
+                    <span class="icon icon-laptop"></span>
+                </div>
+                <div class="category-name">Electronics</div>
+            </a>
+            
+            <a href="category.html?cat=fashion" class="category-card">
+                <div class="category-icon">
+                    <span class="icon icon-shirt"></span>
+                </div>
+                <div class="category-name">Fashion</div>
+            </a>
+            
+            <a href="category.html?cat=hostel" class="category-card">
+                <div class="category-icon">
+                    <span class="icon icon-bed"></span>
+                </div>
+                <div class="category-name">Hostel Essentials</div>
+            </a>
+            
+            <a href="category.html?cat=stationery" class="category-card">
+                <div class="category-icon">
+                    <span class="icon icon-pen"></span>
+                </div>
+                <div class="category-name">Stationery</div>
+            </a>
+            
+            <a href="category.html?cat=sports" class="category-card">
+                <div class="category-icon">
+                    <span class="icon icon-dumbbell"></span>
+                </div>
+                <div class="category-name">Sports & Fitness</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="featured">
+        <div class="featured-container">
+            <h2 class="section-title">Featured Items</h2>
+            <div class="listings-grid">
+                <!-- Listing 1 -->
+                <a href="product.html?id=1" class="listing-card">
+                    <div class="listing-image">
+                        <span class="icon icon-book"></span>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Data Structures & Algorithms Textbook</h3>
+                        <div class="listing-price">₹850</div>
+                        <span class="listing-condition">Like New</span>
+                        <div class="seller-info">
+                            <div class="seller-avatar">T</div>
+                            <div class="seller-details">
+                                <div class="seller-name">Tafheem Ul Haq</div>
+                                <div class="seller-year">2nd Year • CSE</div>
+                            </div>
+                            <span class="trust-badge verified-badge">
+                                <span class="icon icon-check"></span>
+                                Verified
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Listing 2 -->
+                <a href="product.html?id=2" class="listing-card">
+                    <div class="listing-image">
+                        <span class="icon icon-laptop"></span>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">MacBook Air M1 (2020)</h3>
+                        <div class="listing-price">₹65,000</div>
+                        <span class="listing-condition">Good</span>
+                        <div class="seller-info">
+                            <div class="seller-avatar">M</div>
+                            <div class="seller-details">
+                                <div class="seller-name">Monis Farooq</div>
+                                <div class="seller-year">2th Year • CSE</div>
+                            </div>
+                            <span class="trust-badge">
+                                <span class="icon icon-star"></span>
+                                Top Seller
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Listing 3 -->
+                <a href="product.html?id=3" class="listing-card">
+                    <div class="listing-image">
+                        <span class="icon icon-headphones"></span>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Sony WH-1000XM4 Headphones</h3>
+                        <div class="listing-price">₹18,500</div>
+                        <span class="listing-condition">Excellent</span>
+                        <div class="seller-info">
+                            <div class="seller-avatar">A</div>
+                            <div class="seller-details">
+                                <div class="seller-name">Abrar</div>
+                                <div class="seller-year">2nd Year • CSE</div>
+                            </div>
+                            <span class="trust-badge verified-badge">
+                                <span class="icon icon-check"></span>
+                                Verified
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Listing 4 -->
+                <a href="product.html?id=4" class="listing-card">
+                    <div class="listing-image">
+                        <span class="icon icon-bicycle"></span>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Mountain Bike - Hero Sprint</h3>
+                        <div class="listing-price">₹8,500</div>
+                        <span class="listing-condition">Good</span>
+                        <div class="seller-info">
+                            <div class="seller-avatar">B</div>
+                            <div class="seller-details">
+                                <div class="seller-name">Burhan Khurshid</div>
+                                <div class="seller-year">2nd Year • CSE</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Listing 5 -->
+                <a href="product.html?id=5" class="listing-card">
+                    <div class="listing-image">
+                        <span class="icon icon-calculator"></span>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Scientific Calculator Casio fx-991ES</h3>
+                        <div class="listing-price">₹450</div>
+                        <span class="listing-condition">Like New</span>
+                        <div class="seller-info">
+                            <div class="seller-avatar">T</div>
+                            <div class="seller-details">
+                                <div class="seller-name">Tafheem Ul Haq</div>
+                                <div class="seller-year">2nd Year • CSE</div>
+                            </div>
+                            <span class="trust-badge verified-badge">
+                                <span class="icon icon-check"></span>
+                                Verified
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Listing 6 -->
+                <a href="product.html?id=6" class="listing-card">
+                    <div class="listing-image">
+                        <span class="icon icon-chair"></span>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Study Chair - Ergonomic</h3>
+                        <div class="listing-price">₹3,200</div>
+                        <span class="listing-condition">Fair</span>
+                        <div class="seller-info">
+                            <div class="seller-avatar">M</div>
+                            <div class="seller-details">
+                                <div class="seller-name">Mudasir Manzoor</div>
+                                <div class="seller-year">2nd Year • CSE</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CampusMarket</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#safety">Safety Guidelines</a></li>
+                    <li><a href="#contact">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="category.html?cat=books">Textbooks</a></li>
+                    <li><a href="category.html?cat=electronics">Electronics</a></li>
+                    <li><a href="category.html?cat=fashion">Fashion</a></li>
+                    <li><a href="category.html?cat=hostel">Hostel Essentials</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>For Sellers</h3>
+                <ul>
+                    <li><a href="dashboard.html">Seller Dashboard</a></li>
+                    <li><a href="#pricing-tips">Pricing Tips</a></li>
+                    <li><a href="#photo-guide">Photography Guide</a></li>
+                    <li><a href="#success-stories">Success Stories</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#events">Campus Events</a></li>
+                    <li><a href="#groups">Student Groups</a></li>
+                    <li><a href="#feedback">Feedback</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 CampusMarket. Made with <span class="icon icon-heart"></span> for students, by students.</p>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <a href="sell-item.html" class="fab" title="Sell an Item">
+        <span class="icon icon-plus"></span>
+    </a>
+</body>
+</html>
